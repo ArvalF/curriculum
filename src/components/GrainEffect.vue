@@ -18,7 +18,8 @@
     width: 100%;
     pointer-event: none;
     z-index: 1;
-    // transform: translateZ(0);
+      background-color: $primary-color;
+      // transform: translateZ(0);
     
     &:before {
       content: "";

@@ -1,85 +1,109 @@
+<!-- https://webcv.charleslaverdure.com/index.html#mywork -->
+
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 
-import GrainEffect from './GrainEffect.vue';
-import LeftColumn from './LeftColumn.vue';
-import MainContent from './MainContent.vue';
+import GrainEffect from '@/components/GrainEffect.vue';
+import LeftColumn from '@/views/LeftColumn.vue';
+import MainContent from '@/views/MainContent.vue';
 import { useDefineExperiences } from '@/composables/defineExperiences';
 
 const experiences = useDefineExperiences();
-const defaultInfos = ["", "hectorcaillaud@yahoo.fr", "06 31 84 44 40"]
-const activeProject = ref();
+const defaultInfos = ["Hector Caillaud", "hectorcaillaud@yahoo.fr", "06 31 84 44 40"]
+const activeExperience = ref<ActiveExp>();
 const activeCompetences = computed(() => {
-  if (activeProject.value) {
-     let exp = experiences.find(exp => exp.title == activeProject.value.exp)
+  if (activeExperience.value) {
+     let exp = experiences.find(exp => exp.title == activeExperience.value?.exp)
      if (exp) {
-      const project = exp.projects[activeProject.value.project]
+      const project = exp.projects?.find(exp => exp.title == activeExperience.value?.project)
       return project ? project.competences : []
      }
   }
   return []
 })
+const activeExemples = computed(() => {
+  if (activeExperience.value) {
+    let exp = experiences.find(exp => exp.title == activeExperience.value?.exp)
+     if (exp) {
+      const project = exp.projects?.find(exp => exp.title == activeExperience.value?.project)
+      return project ? project.exemples : []
+     }
+  }
+})
 </script>
 
 <template>
-  <GrainEffect>
-
+  <!-- <GrainEffect> -->
   <div class="wrapper">
     <h1 class="header">Curriculum</h1>
     <div class="content-wrapper">
       <LeftColumn
       :active-competences="activeCompetences"
+      :active-exemples="activeExemples"
       :default-infos="defaultInfos"/>
       <MainContent
         :experiences="experiences"
-        v-model="activeProject"
+        v-model="activeExperience"
       />
     </div>
 </div>
-</GrainEffect>
+<!-- </GrainEffect> -->
   
 </template>
 
 <style lang="scss">
-
 body {
   font-family: $font-family;
   font-size: $font-size;
   color: $primary-color;
-  background-color: $background-color;
-  // overflow-y: hidden;
-}
-ul {
-  padding: 1rem;
+  background-color: $primary-color;
+  overflow: hidden;
 }
 
 .header {
+  color: $primary-color;
   text-align: center;
-  margin : 0;
+  font-size: 4rem;
+  margin: 0 auto;
+  margin-left: 50%;
 }
 .wrapper {
   z-index: 2;
-  // height: 90vh;
-  // margin: 1rem auto;
+  height: 92vh;
+  margin: 1rem auto;
   padding: 1rem;
   background-color: $background-color;
   display: grid;
-  grid-template-rows:  3rem 1fr;
+  grid-template-rows:  5rem 1fr;
   border-radius: 3px;
 }
 .content-wrapper {
+  color: $primary-color;
   display: grid;
   grid-template-columns: 1fr 3fr;
   min-height: 0;
   column-gap: 30px;
 }
+.content-wrapper > * {
+  min-height: 0; // ✅ important pour les enfants grid/flex contenant des scrolls
+  min-width: 0;  // ✅ évite les débordements horizontaux (text overflow)
+}
 
-.main-content {
+@media (max-width: $sm-screen)  {
+  .content-wrapper {
+    grid-template-columns: 1fr;
+  }
+  .header {
+  margin-left: 0;
+}
+.wrapper {
+  height: 100%;
+}
+body {
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: $primary-color $background-color;
-  scrollbar-gutter: stable both-edges;
-  min-height: 0; 
+  scrollbar-color: $primary-color;
+}
 }
 
 </style>
