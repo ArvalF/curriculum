@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref, watch } from 'vue';
+import { useAppStore } from '@/store/appStore';
 const props = defineProps<{
   title: string
   place: String
@@ -6,10 +8,28 @@ const props = defineProps<{
   projects?: Array<Project> 
 }>()
 
+const store = useAppStore()
 const activeProject = defineModel<ActiveExp>()
 function setActiveProject(project: string) {
     activeProject.value = {exp: props.title, project: project};
 }
+const arrayProjectRefs = ref([])
+
+
+watch (() => store.activeElement, (element) => {
+    if (element && element instanceof HTMLElement) {
+        let filtered = arrayProjectRefs.value.filter(project => element == project);
+        if (filtered.length > 0 && filtered[0]) {
+            let active = filtered[0] as HTMLElement
+            let activeTitle = active.getAttribute("title")
+            if (activeTitle) {
+                setActiveProject(activeTitle)
+                console.log("Setting hit project to ", activeTitle)
+                store.setHitProject()
+            }
+        }
+    }
+})
 </script>
 
 <template>
@@ -22,8 +42,11 @@ function setActiveProject(project: string) {
             <ul>
                 <li 
                 v-for="project in projects"
+                ref="arrayProjectRefs"
                 @mouseover="setActiveProject(project.title)"
                 :id="project.title"
+                class="section-list-element"
+                :title="project.title"
                 :keys="project.title">
                     <div class="project-title" :class="{ active: activeProject?.project === project.title }">
                         <span>{{ project.title }}</span>

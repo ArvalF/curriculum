@@ -21,5 +21,6 @@ export default defineConfig({
             additionalData: `@use "@/assets/scss/global.scss" as *;`,
         }
     }
-  }
+  },
+  base: "/curriculum/"
 })

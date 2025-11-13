@@ -7,6 +7,7 @@ import GrainEffect from '@/components/GrainEffect.vue';
 import LeftColumn from '@/views/LeftColumn.vue';
 import MainContent from '@/views/MainContent.vue';
 import { useDefineExperiences } from '@/composables/defineExperiences';
+import WormEffect from '@/components/WormEffect.vue';
 
 const experiences = useDefineExperiences();
 const defaultInfos = ["Hector Caillaud", "hectorcaillaud@yahoo.fr", "06 31 84 44 40"]
@@ -34,6 +35,8 @@ const activeExemples = computed(() => {
 
 <template>
   <!-- <GrainEffect> -->
+    <WormEffect/>
+
   <div class="wrapper">
     <h1 class="header">Curriculum</h1>
     <div class="content-wrapper">
