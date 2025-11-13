@@ -1,21 +1,23 @@
-<script setup>
+<script setup lang="ts">
 import { onMounted, onBeforeUnmount, ref, watch, computed } from 'vue'
+import type { Ref } from 'vue'
 import { useAppStore } from '@/store/appStore'
 
 const store= useAppStore()
 const canvasRef = ref(null)
 
 const CELL_SIZE = 16
-let GRID_WIDTH, GRID_HEIGHT
+let GRID_WIDTH: number
+let GRID_HEIGHT: number
 
 let direction = { x: 1, y: 0 }
-let wormSegments = []
+let wormSegments: Array<{ x: number; y: number }> = []
 
 const MOVE_INTERVAL = 100
-let hitTimeStamp = ref(null)
-let animationFrameId = null
+let hitTimeStamp: Ref<number | null> = ref(null)
+let animationFrameId: number | null = null
 let progress = 0
-let lastMoveTimestamp
+let lastMoveTimestamp: number | null = null
 const WORM_DISAPPEAR_TIME = 3000 // Temps en ms pour que le ver disparaisse après un hit
 const timestampNow = ref()
 const wormTransparency = computed(() => {
@@ -65,11 +67,12 @@ function maybeTurn() {
   else if (random < 0.1) turnRight()
 }
 
-function drawWorm(context, interpProgress) {
+function drawWorm(context :CanvasRenderingContext2D, interpProgress: number) {
   context.clearRect(0, 0, GRID_WIDTH * CELL_SIZE, GRID_HEIGHT * CELL_SIZE)
   context.fillStyle = `rgb(249, 98, 125, ${wormTransparency.value})`
 
   const head = wormSegments[0]
+  if (!head) return
   const nextHead = { x: head.x + direction.x, y: head.y + direction.y }
   const interpX = head.x + (nextHead.x - head.x) * interpProgress
   const interpY = head.y + (nextHead.y - head.y) * interpProgress
@@ -78,7 +81,9 @@ function drawWorm(context, interpProgress) {
 
   for (let i = 1; i < wormSegments.length; i++) {
     const segment = wormSegments[i]
+    if (!segment) return
     const prevSegment = wormSegments[i - 1]
+    if (!prevSegment) return
     const segmentInterpX = segment.x + (prevSegment.x - segment.x) * interpProgress
     const segmentInterpY = segment.y + (prevSegment.y - segment.y) * interpProgress
     context.fillRect(segmentInterpX * CELL_SIZE, segmentInterpY * CELL_SIZE, CELL_SIZE, CELL_SIZE)
@@ -87,6 +92,7 @@ function drawWorm(context, interpProgress) {
 
 function moveWorm() {
   const head = wormSegments[0]
+  if (!head) return
   let newHead = { x: head.x + direction.x, y: head.y + direction.y }
   let out = false
   // Rebond sur les bords
@@ -112,13 +118,16 @@ function moveWorm() {
 }
 
 
-function animationLoop(timestamp) {
+function animationLoop(timestamp : number) {
+
   if (!lastMoveTimestamp) lastMoveTimestamp = timestamp
   const elapsed = timestamp - lastMoveTimestamp
 
   progress = Math.min(elapsed / MOVE_INTERVAL, 1)
-  const canvas = canvasRef.value
+  const canvas = (canvasRef.value as HTMLCanvasElement | null)
+  if (!canvas) return
   const context = canvas.getContext('2d')
+  if (!context) return
   timestampNow.value = Date.now()
   drawWorm(context, progress)
 
@@ -132,9 +141,10 @@ function animationLoop(timestamp) {
 }
 
 onMounted(() => {
-  const canvas = canvasRef.value
+  const canvas = (canvasRef.value as HTMLCanvasElement | null)
   setupGrid()
   initWorm()
+  if (!canvas) return
   canvas.width = GRID_WIDTH * CELL_SIZE
   canvas.height = GRID_HEIGHT * CELL_SIZE
 
@@ -149,7 +159,8 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  cancelAnimationFrame(animationFrameId)
+  if (animationFrameId)
+    cancelAnimationFrame(animationFrameId)
 })
 </script>
 
