@@ -48,22 +48,27 @@ export function useDefineExperiences() {
       place:  "Institut Géographique National",
       date: "2021 - 2023",
       projects :
-         [{
-              title: "Etude sur la généralisation",
-              description : "Etude de la généralisation automatique des données volumineuses France entière dans le cadre de la génération de flux TMS. Paramétrage automatique pour les clients de la géoplateforme.",
+         [
+          {
+              title: "Suivi des développements d'un prestataire",
+              description : "Dans le cadre de la création de la géoplateforme, suivi techniques des implémentations, recettes des services",
+              competences : ["JIRA", "Recettes fonctionnelles et techniques"],
               exemples: [
-                { link: "https://github.com/felt/tippecanoe", label : "Dépôt Tippecanoe"},
+                { link: "https://geoservices.ign.fr/services-geoplateforme", label : "La géoplateforme"},
+                { link: "https://cartes.gouv.fr/catalogue/search", label : "Catalogue des données et services"},
               ],
-              competences : ["rok4", "tippecanoee"]
           },
           {
-              title: "Suivi de développement service Métadonnées",
-              description : "Dans le cadre de la création de la géoplateforme, suivi techniques des implémentations, recettes du service de métadonnées",
-              competences : ["JIRA", "tippecanoee"]
-          },
+            title: "Etude sur la généralisation en cartographie",
+            description : "Etude de la généralisation automatique des données volumineuses France entière dans le cadre de la génération de flux TMS. Paramétrage automatique pour les clients de la géoplateforme.",
+            exemples: [
+              { link: "https://github.com/felt/tippecanoe", label : "Dépôt Tippecanoe"},
+            ],
+            competences : ["rok4", "tippecanoee"]
+        },
           {
               title: "Suivi de la communauté OpenSource",
-              description : "La géoplateforme se basant sur des solutions OpenSource, particpation à différents évènements rassemblants les acteurs de la communauté. Par exemples les rencontres utilisateurs du Geonetwork",
+              description : "La géoplateforme se basant sur des solutions OpenSource, participation à différents évènements rassemblants les acteurs de la communauté. Par exemples les rencontres utilisateurs du Geonetwork",
               competences : ["Communauté OpenSource", "Gouvernance et financement", "Geonetwork", "Geoserver"]
           }]
     },
@@ -147,3 +152,75 @@ export function useDefineExperiences() {
   ]
   return experiences
 }
+
+export function useDefineFormations() {
+  const formations: Array<Experience> = [
+    {
+      title: "Formation en informatique",
+      place:  "Ecole 42",
+      date: "2017 - 2019",
+      projects :
+    [  
+      {
+        title: "Expérience entreprenariale",
+        description : "Proposition d'une solution innovante de valorisation de l'abbaye de Cluny via une application mobile de visite guidée au son spatialisé",
+        exemples: [{ link: "https://www.matrice.io/", label : "Parcours Matrice"}],
+        competences : ["Etude de marché", "Business Model", "Pitch", "Lean Startup"]
+    }, 
+      {
+        title: "Formation généraliste en développement informatique",
+        description : "Formation intensive en développement informatique axée sur la pratique et la résolution de projets concrets en autonomie ou en équipe.",
+        exemples: [{ link: "https://42.fr/42-cest-quoi/la-methode-42/", label : "Ecole 42"}],
+        competences : ["C", "Shell", "Algorithmique", "Architecture logicielle", "Computer Graphics", "Pair-programming", "PHP", "Développement web"]
+    }
+      ]
+    },
+     {
+      title: "Parcours universitaire en Géographie",
+      place:  "Université Paris 1 Panthéon-Sorbonne",
+      date: "2014 - 2016",
+      projects :
+    [  
+      {
+        title: "Publication d'un livret pédagogique nsur les grottes d'Isturitz et d'Oxocelhaya",
+        description : "Livret de vulgarisation scientifique vendu dans le cadre de la visite des grottes d'Isturitz et d'Oxocelhaya (Pyrénées-Atlantiques).",
+        exemples: [{ link: "https://hal.science/hal-04911712v1", label : "Publication"}],
+        competences : ["inDesing", "Illustrator", "Vulgarisation scientifique", "Rédaction", "Cartographie"]
+    },  
+      {
+        title: "Mémoire de recherche : Spéléogenèse et zookarstologie",
+        description : "Étude de la spéléogenèse dans les grottes d'Isturitz et Oxcocelhaya (Pyrénées-Atlantiques).",
+        exemples: [{ link: "https://www.researchgate.net/profile/Hector-Caillaud", label : "Publications"}],
+        competences : ["Géomorphologie", "Paléoclimatologie",  "Environnements Karstiques", "photogrammétrie", "Rédaction scientifique"]
+    }, 
+      {
+        title: "Master Dynamiques des milieux et risques",
+        description : "Formation spécialisée en géographie physique axée sur les dynamiques environnementales (changements climatiques), les risques naturels et les paléoclimats",
+        exemples: [{ link: "https://formations.pantheonsorbonne.fr/fr/catalogue-des-formations/master-M/master-geographie-KBUW66GE/master-parcours-dynamiques-des-milieux-et-risques-dynarisk-KBUW7UTJ.html", label : "Master Dynarisk"}],
+        competences : ["Changements Environnementaux", "Risque Naturel", "Géomorphologie", "Paléoclimatologie", "Statistiques", "SIG", "Analyses spatiales", "Environnements Karstiques"]
+    }, 
+      {
+            title: "Licence de Géographie",
+            description : "Formation généraliste en géographie physique et humaine.",
+            exemples: [{ link: "https://formations.pantheonsorbonne.fr/fr/catalogue-des-formations/licence-L/licence-geographie-et-amenagement-KBTFYMBI/licence-geographie-et-amenagement-parcours-espaces-territoires-societes-KBTG6ZIW.html", label : "Licence Géographie"}],
+            competences : ["Hydrosystème", "Changements Environnementaux", "SIG", "Analyses spatiales", "Géographie humaine", "Sciences Sociales", "Cartographie"]
+        }
+      ]
+    },
+    {
+      title: "Prépa B/L",
+      place:  "Lycée Lakanal",
+      date: "2012 - 2014",
+      projects :
+    [    
+      {
+            title: "Prépa Littéraire B/L",
+            description : "Formation généraliste littéraire et scientifique.",
+            exemples: [{ link: "https://www.citescolairelakanal.fr/cpge/presentation", label : "Lycée Lakanal"}],
+            competences : ["Géographie", "Histoire", "Philosophie", "Littérature", "Mathématiques", "Sciences Sociales"]
+        }
+      ]
+    },
+   ]
+   return formations
+ }

@@ -7,9 +7,12 @@ const store= useAppStore()
 const canvasRef = ref(null)
 
 const CELL_SIZE = 16
-let GRID_WIDTH: number
-let GRID_HEIGHT: number
-
+let GRID_WIDTH = computed(() => {
+  return Math.floor(store.mainContentBounding.width / CELL_SIZE)
+})
+let GRID_HEIGHT = computed(() => {
+  return Math.floor(store.mainContentBounding.height / CELL_SIZE)
+})
 let direction = { x: 1, y: 0 }
 let wormSegments: Array<{ x: number; y: number }> = []
 
@@ -34,14 +37,9 @@ watch(() => store.hitProject, (hitProject) => {
   }
 })
 
-function setupGrid() {
-  GRID_WIDTH = Math.floor(window.innerWidth / CELL_SIZE)
-  GRID_HEIGHT = Math.floor(window.innerHeight / CELL_SIZE)
-}
-
 function initWorm() {
-  const startX = Math.floor(GRID_WIDTH / 4)
-  const startY = Math.floor(GRID_HEIGHT / 2)
+  const startX = Math.floor(GRID_WIDTH.value / 4)
+  const startY = Math.floor(GRID_HEIGHT.value / 2)
   wormSegments = []
   for (let i = 0; i < 8; i++) {
     wormSegments.push({ x: startX - i, y: startY })
@@ -68,7 +66,7 @@ function maybeTurn() {
 }
 
 function drawWorm(context :CanvasRenderingContext2D, interpProgress: number) {
-  context.clearRect(0, 0, GRID_WIDTH * CELL_SIZE, GRID_HEIGHT * CELL_SIZE)
+  context.clearRect(0, 0, GRID_WIDTH.value * CELL_SIZE, GRID_HEIGHT.value * CELL_SIZE)
   context.fillStyle = `rgb(249, 98, 125, ${wormTransparency.value})`
 
   const head = wormSegments[0]
@@ -96,12 +94,12 @@ function moveWorm() {
   let newHead = { x: head.x + direction.x, y: head.y + direction.y }
   let out = false
   // Rebond sur les bords
-  if (newHead.x < 0 || newHead.x >= GRID_WIDTH) {
+  if (newHead.x < 0 || newHead.x >= GRID_WIDTH.value) {
     direction.x *= -1
     newHead = { x: head.x + direction.x, y: head.y + direction.y }
     out = true;
   }
-  if (newHead.y < 0 || newHead.y >= GRID_HEIGHT) {
+  if (newHead.y < 0 || newHead.y >= GRID_HEIGHT.value) {
     direction.y *= -1
     newHead = { x: head.x + direction.x, y: head.y + direction.y }
     out = true;
@@ -113,8 +111,8 @@ function moveWorm() {
   wormSegments.unshift(newHead)
   wormSegments.pop()
 
-  store.setWormHeadPixelX(head.x * CELL_SIZE + CELL_SIZE / 2)
-  store.setWormHeadPixelY(head.y * CELL_SIZE + CELL_SIZE / 2)
+  store.setWormHeadPixelX((head.x * CELL_SIZE + CELL_SIZE / 2) + store.mainContentBounding.left)
+  store.setWormHeadPixelY((head.y * CELL_SIZE + CELL_SIZE / 2) + store.mainContentBounding.top)
 }
 
 
@@ -141,21 +139,31 @@ function animationLoop(timestamp : number) {
 }
 
 onMounted(() => {
-  const canvas = (canvasRef.value as HTMLCanvasElement | null)
-  setupGrid()
+  // const canvas = (canvasRef.value as HTMLCanvasElement | null)
   initWorm()
-  if (!canvas) return
-  canvas.width = GRID_WIDTH * CELL_SIZE
-  canvas.height = GRID_HEIGHT * CELL_SIZE
+  // if (!canvas) return
+  // console.log("init canvas")
+  // console.log(store.mainContentBounding)
 
   animationFrameId = requestAnimationFrame(animationLoop)
 
-  window.addEventListener('resize', () => {
-    setupGrid()
-    canvas.width = GRID_WIDTH * CELL_SIZE
-    canvas.height = GRID_HEIGHT * CELL_SIZE
-    initWorm()
-  })
+  // window.addEventListener('resize', () => {
+  //   canvas.width = GRID_WIDTH.value * CELL_SIZE
+  //   canvas.height = GRID_HEIGHT.value * CELL_SIZE
+  //   canvas.style.top = store.mainContentBounding.top.toString() +'px'
+  //   canvas.style.left = store.mainContentBounding.left.toString() +'px'
+  //   initWorm()
+  // })
+})
+
+watch(store.mainContentBounding, (val) => {
+  console.log("watch init canvas")
+  const canvas = (canvasRef.value as HTMLCanvasElement | null)
+  if (!canvas) return
+  canvas.width = GRID_WIDTH.value * CELL_SIZE
+  canvas.height = GRID_HEIGHT.value * CELL_SIZE
+  canvas.style.top = val.top.toString() +'px'
+  canvas.style.left = val.left.toString() +'px'
 })
 
 onBeforeUnmount(() => {
@@ -166,15 +174,19 @@ onBeforeUnmount(() => {
 
 <template>
   <canvas v-if="wormTransparency" ref="canvasRef" />
+  <!-- <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; color: tomato;">
+    
+    transparency {{ wormTransparency }}
+    GRID_HEIGHT : {{ GRID_HEIGHT }}
+    GRID_WIDTH : {{ GRID_WIDTH }}
+    top : {{ store.mainContentBounding.top.toString() }}
+    left : {{ store.mainContentBounding.left.toString() }}
+  </div> -->
 </template>
 
 <style scoped>
 canvas {
-  width: 100%;
-  height: 100%;
   position: absolute;
-  top: 0;
-  left: 0;
   z-index: 9999;
   pointer-events: none;
   background: transparent;

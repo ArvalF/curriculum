@@ -67,8 +67,10 @@ watch (() => store.activeElement, (element) => {
   @include global-list;
   .project-title {
     font-weight: bold;
-
 }
+    ul {
+        margin: 0;
+    }
 }
 .project-title.active > span {
       background-color: $highlight-color2; /* surligné au survol */

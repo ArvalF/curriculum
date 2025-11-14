@@ -28,7 +28,7 @@ const hasInfos = computed(() => {
             <!-- Liste d'Exemples -->
              <template v-if="width > smScreen">
               <div v-if="activeExemples && activeExemples.length > 0">
-              <div class="section-title">Exemples</div>
+              <div class="section-title">Liens</div>
               <ul class="section-content highlight-info" >
                 <li v-for="exemple in activeExemples">
                   <a :href="exemple.link">{{ exemple.label }}</a>
@@ -38,20 +38,21 @@ const hasInfos = computed(() => {
           <!-- Liste de Compétences -->
               <div v-if="activeCompetences && activeCompetences.length > 0">
                 <div class="section-title">Compétences</div>
-                <ul class="section-content highlight-info" >
+                <ul class="section-content highlight-info competences" >
                   <li v-for="competence in activeCompetences">
                     {{ competence }}
                   </li>
                 </ul>
               </div>
              </template>
-             <div>
+          <div>
             <div class="section-title">Contacts</div>
             <ul class="section-content highlight-info" >
               <li v-for="info in defaultInfos">
                 {{ info }}
               </li>
             </ul>
+            <img class="profile-pic" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="">
           </div>
         </div>
       </div>
@@ -115,5 +116,16 @@ a:hover {
   .section-container {
     max-width: 100%;
 }
+}
+
+.competences  {
+  font-weight: bolder;
+
+}
+.profile-pic {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-top: 1rem;
 }
 </style>

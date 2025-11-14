@@ -6,15 +6,19 @@ import { computed, ref } from 'vue';
 import GrainEffect from '@/components/GrainEffect.vue';
 import LeftColumn from '@/views/LeftColumn.vue';
 import MainContent from '@/views/MainContent.vue';
-import { useDefineExperiences } from '@/composables/defineExperiences';
+import { useDefineExperiences, useDefineFormations } from '@/composables/defineExperiences';
 import WormEffect from '@/components/WormEffect.vue';
+import { useWindowSize } from '@vueuse/core';
 
+const {width, height} = useWindowSize();
 const experiences = useDefineExperiences();
+const formations = useDefineFormations();
 const defaultInfos = ["Hector Caillaud", "hectorcaillaud@yahoo.fr", "06 31 84 44 40"]
 const activeExperience = ref<ActiveExp>();
+
 const activeCompetences = computed(() => {
   if (activeExperience.value) {
-     let exp = experiences.find(exp => exp.title == activeExperience.value?.exp)
+     let exp = experiences.concat(formations).find(exp => exp.title == activeExperience.value?.exp)
      if (exp) {
       const project = exp.projects?.find(exp => exp.title == activeExperience.value?.project)
       return project ? project.competences : []
@@ -24,7 +28,7 @@ const activeCompetences = computed(() => {
 })
 const activeExemples = computed(() => {
   if (activeExperience.value) {
-    let exp = experiences.find(exp => exp.title == activeExperience.value?.exp)
+    let exp = experiences.concat(formations).find(exp => exp.title == activeExperience.value?.exp)
      if (exp) {
       const project = exp.projects?.find(exp => exp.title == activeExperience.value?.project)
       return project ? project.exemples : []
@@ -35,8 +39,7 @@ const activeExemples = computed(() => {
 
 <template>
   <!-- <GrainEffect> -->
-    <WormEffect/>
-
+    <WormEffect v-if="width > 992"/>
   <div class="wrapper">
     <h1 class="header">Curriculum</h1>
     <div class="content-wrapper">
@@ -46,6 +49,7 @@ const activeExemples = computed(() => {
       :default-infos="defaultInfos"/>
       <MainContent
         :experiences="experiences"
+        :formations="formations"
         v-model="activeExperience"
       />
     </div>
@@ -66,7 +70,7 @@ body {
 .header {
   color: $primary-color;
   text-align: center;
-  font-size: 4rem;
+  font-size: 3rem;
   margin: 0 auto;
   margin-left: 50%;
 }
