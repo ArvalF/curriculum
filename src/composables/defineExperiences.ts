@@ -224,3 +224,22 @@ export function useDefineFormations() {
    ]
    return formations
  }
+ export function useDefineCompetences() {
+const competences = {
+  "Langages, frameworks, technologies" : [
+    "Javascript", "Vue 3", "HTML", "CSS", "Python", "Python/Django", "Docker", "Postgres", "Postgis","bash", "Application Mobile"
+    ],
+    "Géomatique et Cartographie" : [
+      "Système d'informations géographiques (SIG)", "QGIS", "Standards OGC", "PostGIS", "tippecanoee", "rok4", "MapLibre GL JS", "Geonetwork", "Geoserver","TileMapService", "Mapbox", "Openlayers", "leaflet","inDesing", "Illustrator"
+    ],
+    "Méthode et contexte de travail" :  [
+      "Agile", "JIRA", "FIGMA", "Pair-programming", "Recettes fonctionnelles et techniques", "Test unitaire", "Design System de l'état DSFR", "Jenkins", "Communauté OpenSource"
+    ], 
+    "Académiques" : [
+      "Enseignement supérieur", "Vulgarisation scientifique", "Géomorphologie", "Paléoclimatologie",  "Photogrammétrie", "Rédaction scientifique",
+      "Changements Environnementaux", "Risques Naturels", "Géomorphologie", "Statistiques", "SIG", "Analyses spatiales", "Environnements Karstiques",
+      "Hydrosystème", "Analyses spatiales", "Géographie humaine"
+    ]
+  }
+  return competences
+}

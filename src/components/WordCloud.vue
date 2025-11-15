@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {  ref } from 'vue'
-import { useDefineExperiences, useDefineFormations } from '@/composables/defineExperiences'
+import { useDefineExperiences, useDefineFormations, useDefineCompetences } from '@/composables/defineExperiences'
 const canvasRef = ref(null)
 
 const competences = useDefineExperiences().concat(useDefineFormations())
@@ -19,27 +19,39 @@ function compterOccurrences(arr: Array<string>): [string, number][] {
 </script>
 
 <template>
-    <div class="competences-list">
-      <div v-for="w in compterOccurrences(competences).sort((a,b) => b[1] - a[1])"
-        class="competence">
-        {{ w[0] }} <span>{{ w[1] }}</span>
+    <div class="section-container">
+      <div v-for="cs, key in useDefineCompetences()">
+        <div class="section-title">{{ key }}</div>
+        <div class="competences-list">
+          <div v-for="c in cs" class="competence">
+            {{ c }}
+          </div>
+        </div>
       </div>
     </div>
 </template>
 
 <style scoped lang="scss">
-canvas {
-  width: max-content;
-  height: fit-content;
+.section-container {
+    @include section-container($background-color);
 }
-
+.section-title {
+  border-radius: 3px;
+  @include section-title($primary-color, $background-color);
+}
 .competences-list {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   max-width: inherit;
   overflow-x: hidden;
-  margin-top: 4.3rem;
+}
+
+@media (max-width: $sm-screen)  
+{
+  .competences-list {
+    margin-top: 1rem;
+  }
 }
 .competence{
   width: max-content;
