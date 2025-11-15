@@ -60,8 +60,8 @@ watch (() => store.activeElement, (element) => {
 
 <style scoped lang="scss">
 .section-content {
-//   @include section-content($terciary-bkg-color);
-  @include section-content($terciary-bkg-color);
+//   @include section-content($tertiary-bkg-color);
+  @include section-content($tertiary-bkg-color);
 @include t-border-radius;
 @include b-border-radius;
   @include global-list;

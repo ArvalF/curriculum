@@ -83,7 +83,7 @@ const hasInfos = computed(() => {
   height: 95%;
 }
 .section-content {
-  @include section-content($terciary-bkg-color);
+  @include section-content($tertiary-bkg-color);
   @include b-border-radius;
   @include t-border-radius;
 }
