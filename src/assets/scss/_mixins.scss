@@ -1,0 +1,45 @@
+@use "variables";
+
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin section-title($primary-color, $background-color) {
+    font-size: x-large;
+    font-weight: bold;
+    color: $primary-color;
+    background-color: $background-color;
+    padding: 0.5rem;
+}
+
+@mixin section-container($background-color) {
+    padding : 1rem;
+    background-color: $background-color;
+}
+
+@mixin section-content($background-color) {
+    background-color: $background-color;
+    padding: 1rem;
+    max-width: 100%;
+}
+
+@mixin global-list () {
+    ul {
+        list-style-type: none;
+        li {
+            margin-bottom: 0.5rem;
+        }
+    }
+}
+
+@mixin t-border-radius () {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+@mixin b-border-radius () {
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
