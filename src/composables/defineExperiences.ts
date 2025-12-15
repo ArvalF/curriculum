@@ -178,7 +178,7 @@ export function useDefineFormations() {
             competences: ["Étude de marché", "Business Model", "Pitch", "Lean Startup"]
           },
           {
-            title: "cole 42",
+            title: "Ecole 42",
             description: "Formation intensive en développement informatique axée sur la pratique et la résolution de projets concrets en autonomie ou en équipe.",
             exemples: [{ link: "https://42.fr/42-cest-quoi/la-methode-42/", label: "École 42" }],
             competences: ["C", "Shell", "Algorithmique", "Architecture logicielle", "Computer Graphics", "Pair-programming", "PHP", "Développement web"]

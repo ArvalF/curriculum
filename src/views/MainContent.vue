@@ -94,7 +94,7 @@ onMounted(() => {
 <style scoped lang="scss">
 .parent {
   display: grid;
-  grid-template-rows: 4rem 3fr;
+  grid-template-rows: 5rem 3fr;
 
 }
 .main-content {
@@ -164,14 +164,18 @@ onMounted(() => {
     max-width: 88vw;
     overflow-y: hidden;
     overflow-x: auto;
-     /* Masquer la scrollbar sous Firefox */
-    scrollbar-width: none; /* Firefox */
     justify-content: left;
+    scrollbar-width: thin;
+    padding-bottom: 8px;
+    box-sizing: content-box;
+    &::-webkit-scrollbar {
+      width: 3px; /* extra fin */
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+      margin: 6px 0; /* retire visuellement les "flèches" */
+    }
 
-/* Masquer la scrollbar sous Chrome, Edge et Safari */
-&::-webkit-scrollbar {
-  display: none;
-}
   }
 }
 
