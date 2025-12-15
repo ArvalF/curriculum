@@ -167,7 +167,7 @@ export function useDefineFormations() {
   const formations: Array<Experience> = [
     {
       title: "Formation en informatique",
-      place: "École 42",
+      place: "Ecole 42",
       date: "2017 - 2019",
       projects:
         [

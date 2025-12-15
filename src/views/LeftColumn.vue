@@ -65,7 +65,13 @@ function deactiveSelection() {
               width < smScreen 
               || !hasInfos">
               <div>
-                <img src="/profile-pic.png" class="profile-pic">
+                <div class="profile">
+                  <img src="/profile-pic.png" class="profile-pic">
+                  <div class="name">
+                    <p>Hector</p>
+                    <p>Caillaud</p>
+                  </div>
+                </div>
                 <div class="section-content text-justify" >
                   <div>
                     <b>Développeur, géographe et enseignant </b> avec une solide expérience en création d'<b>interfaces web cartographiques.</b>
@@ -167,6 +173,17 @@ a:hover {
 .competences  {
   font-weight: bolder;
 
+}
+.profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  .name {
+    font-weight: bold;
+    line-height: 0.5rem;
+    font-size: 1.5rem;
+  }
 }
 .profile-pic {
   width: 5rem;
